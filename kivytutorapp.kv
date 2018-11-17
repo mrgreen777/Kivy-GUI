@@ -16,6 +16,33 @@
                     #On event press run the function open_settings from the class App
                     on_press: app.open_settings()
 
+    # Manage the # screen or windows
+    ScreenManager: 
+        id: kivy_screen_manager
+        StartScreen:
+            name: 'start_screen'
 
-    Label:
-        text: 'With the name of Allah the most merciful the most gracious'
+# Creating a new widgets that inhertite from the widget Screen
+# This widget accept only one widgets inside it but it possible to use a layout
+<StartScreen@Screen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: root.width * .02,  root.height * .02
+        # Its possible to usse python function like min()
+        spacing: min(root.width, root.height) * .02
+
+        Label:
+            text: '[b]Kivy Math tutor[/b]' # text with bold markup
+            markup: True
+        Button:
+            text: 'Addition'       
+        Button:
+            text: 'Substraction' 
+        Button:
+            text: 'Multiplication'  
+        Button:
+            text: 'Division'     
+        Button:
+            text: 'Max!'    
+        Button:
+            text: 'About this app'
