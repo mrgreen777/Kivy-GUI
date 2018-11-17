@@ -1,0 +1,21 @@
+<KivyTutorRoot>:
+    orientation: 'vertical'
+
+    # Declaring the top Action Bar
+    ActionBar:
+        ActionView:
+            ActionPrevious:
+                title: 'Application'
+                # The Icon Button do no return the last window
+                # An Icon can be changed look at the documentation
+                with_previous: False
+            # the 3 doted vertical Button which include settinsg btn
+            ActionOverflow:
+                ActionButton:
+                    text: 'Settings'
+                    #On event press run the function open_settings from the class App
+                    on_press: app.open_settings()
+
+
+    Label:
+        text: 'With the name of Allah the most merciful the most gracious'
