@@ -1,4 +1,4 @@
-<WrapedLabel@Label>:
+<WrappedLabel@Label>:
     size_hint_y : None # Do not auto alocation the space the height takes
     # the height of the text + its half
     height: self.texture_size[1] + (self.texture_size[1] / 1)
@@ -46,7 +46,7 @@
         # Its possible to usse python function like min()
         spacing: min(root.width, root.height) * .02
 
-        WrapedLabel:
+        WrappedLabel:
             text: '[b]Kivy Math tutor[/b]' # text with bold markup
             font_size: min(root.height, root.width) / 10
 
@@ -78,14 +78,14 @@
         orientation: 'vertical'
         padding: root.width * .02,  root.height * .02
         spacing: 10
-        WrapedLabel:
+        WrappedLabel:
             id : question_text
             text : "Some dummy text"
             font_size: min(root.height, root.width) / 10
         BoxLayout:
             orientation: 'horizontal'
             size_hint_y : None
-            WrapedLabel:    
+            WrappedLabel:    
                 id : answer_text
                 text: ''
                 font_size: min(root.height, root.width) / 10
