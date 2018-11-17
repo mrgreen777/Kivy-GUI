@@ -102,3 +102,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+# Other Folders
+test.py
+kivy_logfile1.txt
+Repeat
