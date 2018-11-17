@@ -9,7 +9,7 @@ from kivy.core.window import Window
 from kivy.properties import ObjectProperty
 
 from arithmetic import Arithmetic
-
+from json_settings import json_settings, json_settings2
 import random
 import webbrowser 
 
@@ -167,6 +167,7 @@ class KivyTutorApp(App):
     """The Main Application"""
     def __init__(self, **kwargs):
         super(KivyTutorApp, self).__init__(**kwargs)
+        self.use_kivy_settings = False
         # Whene there is a keypress run this method onBackBtn
         Window.bind(on_keyboard=self.onBackBtn)
 
@@ -191,6 +192,18 @@ class KivyTutorApp(App):
         "kivy" : "https://kivy.org",
         "mit" : "https://github.com/mrgreen777/Kivy-GUI/blob/master/LICENSE"}
         webbrowser.open(_dict[ref])
+
+    def build_config(self, config):
+        config.setdefaults("General", {"lower_num" : 0, "upper_num" : 10})
+
+    def build_settings(self, settings):
+        settings.add_json_panel("Kivy Tutor App", self.config, data=json_settings)
+
+    def on_config_change(self, config, section, key ,value):
+        if key == "upper_num":
+            self.root.math_screen.max_num = int(value)
+        elif key == "lower_num":
+            self.root.math_screen.min_num = int(value)
 
 if __name__ == '__main__':
             # the run function is inherited from App class
