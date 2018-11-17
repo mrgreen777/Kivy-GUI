@@ -7,6 +7,7 @@ from kivy.properties import ObjectProperty
 
 from arithmetic import Arithmetic
 
+import random
 import webbrowser 
 
 
@@ -19,9 +20,10 @@ class KivyTutorRoot(BoxLayout):
         super(KivyTutorRoot, self).__init__(**kwargs)
         # List of previous screens
         self.screen_list = []
+        self.is_mix = False
 
     def changeScreen(self, next_screen):
-        operation = ("addition susbtraction multiplication division").split()
+        operations = ("addition subtraction  multiplication division".split())
         question = None
 
         # if the current screen not in memory then just add it 4 later use
@@ -32,9 +34,32 @@ class KivyTutorRoot(BoxLayout):
             # This code is telling manager to the make the screen about screen
             self.ids.kivy_screen_manager.current = "about_screen"
         else:
+            if next_screen == "mix!": # randomly select an operation
+                self.is_mix = True
+                index = random.randint(0, len(operations) - 1)#Rnd number
+                next_screen = operations[index] #Rnd Screen
+            else:
+                self.is_mix = False
+            for operation in operations: #find a question for operation
+                  if next_screen == operation:
+                    # Question come from math_screen class which inherite from Arthmetic which the questions are stored
+                    question = ("self.math_screen.get_{}_question()".format(operation))
             # make the question_text whatever the name of previous-screen
-            self.math_screen.question_text.text = next_screen
+            self.math_screen.question_text.text = KivyTutorRoot.prepQuestion(
+                    eval(question) if question is not None else None
+                )
             self.ids.kivy_screen_manager.current = "math_screen"
+
+    @staticmethod
+    def prepQuestion(question):
+        """Prepars for math question with markup"""
+        if question == None:
+            return "EROOR"
+        text_list = question.split()
+        text_list.insert(2, "[b]")
+        text_list.insert(len(text_list), "[/b]")
+        print("This is  : {}".format( text_list))
+        return (" ".join(text_list))
 
     def on_Back_Btn(self):
         # Check if theris any screen to go back 2
