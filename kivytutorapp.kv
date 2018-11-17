@@ -1,3 +1,9 @@
+<WrapedLabel@Label>:
+    size_hint_y : None # Do not auto alocation the space the height takes
+    # the height of the text + its half
+    height: self.texture_size[1] + (self.texture_size[1] / 1)
+    markup: True
+
 <KivyTutorRoot>:
     orientation: 'vertical'
 
@@ -31,9 +37,10 @@
         # Its possible to usse python function like min()
         spacing: min(root.width, root.height) * .02
 
-        Label:
+        WrapedLabel:
             text: '[b]Kivy Math tutor[/b]' # text with bold markup
-            markup: True
+            font_size: min(root.height, root.width) / 10
+
         Button:
             text: 'Addition'       
         Button:
@@ -46,3 +53,17 @@
             text: 'Max!'    
         Button:
             text: 'About this app'
+
+<AboutScreen@Screen>:
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: root.width * .02, root.height * .02
+        Label:
+            text: app.getText()
+            halign : 'center'
+            markup: True 
+            font_size: root.height / 20
+            text_size: (self.width, None)
+            center_y: .5
+            # You can have this ref in text only
+            on_ref_press: app.on_ref_press(*args)
