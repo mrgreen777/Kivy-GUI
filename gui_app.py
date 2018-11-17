@@ -1,4 +1,3 @@
-
 from kivy.app import App 
 from kivy.clock import Clock 
 from kivy.uix.boxlayout import BoxLayout
@@ -63,7 +62,6 @@ class KivyTutorRoot(BoxLayout):
         text_list = question.split()
         text_list.insert(2, "[b]")
         text_list.insert(len(text_list), "[/b]")
-        print("This is  : {}".format( text_list))
         return (" ".join(text_list))
 
     def on_Back_Btn(self):
@@ -103,7 +101,7 @@ class MathPopup(Popup):
                 self.content.remove_widget(self.wrapped_button)
         # if answer is wrong display btn if not visible
         else:       
-            if self.wrapped_button in self.content.children:
+            if self.wrapped_button not in self.content.children:
                 self.content.add_widget(self.wrapped_button)
 
         # Set up text message
@@ -111,7 +109,7 @@ class MathPopup(Popup):
 
         # Display popup
         super(MathPopup, self).open()
-        if Correct:
+        if correct:
             Clock.schedule_once(self.dismiss, 1)
 
     def _prep_text(self, correct):
@@ -119,8 +117,8 @@ class MathPopup(Popup):
             index = random.randint(0, len(self.GOOD_LIST) - 1)
             return self.GOOD.format(self.GOOD_LIST[index])
         else:
-            index = random.randint(0, len(self.GOOD_LIST) - 1)
-            math_screen = app.get_running_app().root.math_screen
+            index = random.randint(0, len(self.BAD_LIST) - 1)
+            math_screen = App.get_running_app().root.math_screen
             answer = math_screen.get_answer()
             return self.BAD.format(self.BAD_LIST[index], answer)
 
@@ -152,9 +150,9 @@ class KeyPad(GridLayout):
             answer = math_screen.get_answer()
             root = App.get_running_app().root 
             if int(answer_text.text) == answer:
-                print("YEAH")
+                root.math_popup.open(True)
             else:
-                print("DAhhh")
+                root.math_popup.open(False)
 
             #Clearing the answer
             answer_text.text = ""
