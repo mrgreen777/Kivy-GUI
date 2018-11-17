@@ -6,6 +6,9 @@
 
 <KivyTutorRoot>:
     orientation: 'vertical'
+    # python Obj : kivy guess
+    kivy_screen_manager : kivy_screen_manager
+    math_screen : math_screen
 
     # Declaring the top Action Bar
     ActionBar:
@@ -30,6 +33,9 @@
         AboutScreen:
             id : about_screen
             name: 'about_screen'
+        MathScreen:
+            id : math_screen
+            name: 'math_screen'
 
 # Creating a new widgets that inhertite from the widget Screen
 # This widget accept only one widgets inside it but it possible to use a layout
@@ -45,19 +51,51 @@
             font_size: min(root.height, root.width) / 10
 
         Button:
-            text: 'Addition'       
+            text: 'Addition'
+            on_release: app.root.changeScreen(self.text.lower())       
         Button:
             text: 'Substraction' 
+            on_release: app.root.changeScreen(self.text.lower())       
         Button:
             text: 'Multiplication'  
+            on_release: app.root.changeScreen(self.text.lower())       
         Button:
             text: 'Division'     
+            on_release: app.root.changeScreen(self.text.lower())       
         Button:
             text: 'Max!'    
+            on_release: app.root.changeScreen(self.text.lower())       
         Button:
             text: 'About this app'
             # self is for btn
             on_release: app.root.changeScreen(self.text.lower())
+
+
+<MathScreen>:
+    question_text : question_text
+    answer_text : answer_text
+    BoxLayout:
+        orientation: 'vertical'
+        padding: root.width * .02,  root.height * .02
+        spacing: 10
+        WrapedLabel:
+            id : question_text
+            text : "Some dummy text"
+            font_size: min(root.height, root.width) / 10
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y : None
+            WrapedLabel:    
+                id : answer_text
+                text: ''
+                font_size: min(root.height, root.width) / 10
+            Button:
+                id: clear_btn
+                text: "[b]Clear[/b]"
+                markup: True 
+                size_hint: .3, None
+                height : question_text.texture_size[1]
+                on_release : answer_text.text=''
 
 <AboutScreen@Screen>:
     BoxLayout:
