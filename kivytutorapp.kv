@@ -27,6 +27,9 @@
         id: kivy_screen_manager
         StartScreen:
             name: 'start_screen'
+        AboutScreen:
+            id : about_screen
+            name: 'about_screen'
 
 # Creating a new widgets that inhertite from the widget Screen
 # This widget accept only one widgets inside it but it possible to use a layout
@@ -53,6 +56,8 @@
             text: 'Max!'    
         Button:
             text: 'About this app'
+            # self is for btn
+            on_release: app.root.changeScreen(self.text.lower())
 
 <AboutScreen@Screen>:
     BoxLayout:
