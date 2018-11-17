@@ -6,13 +6,24 @@ from kivy.uix.button import Button
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.popup import Popup
 from kivy.core.window import Window
+from kivy.core.text import LabelBase
 from kivy.properties import ObjectProperty
+from kivy.utils import get_color_from_hex
 
 from arithmetic import Arithmetic
 from json_settings import json_settings, json_settings2
 import random
 import webbrowser 
 
+# Color the backgroun
+Window.clearcolor = get_color_from_hex("#16203B")
+
+# Register font
+LabelBase.register(
+    name ="Roboto",
+    fn_regular="./fonts/Roboto-Thin.ttf",
+    fn_bold="./fonts/Roboto-Medium.ttf"
+)
 
 class KivyTutorRoot(BoxLayout):
     """The Root of all widgets"""
