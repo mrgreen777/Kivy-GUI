@@ -2,6 +2,7 @@ from kivy.app import App
 from kivy.clock import Clock 
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen 
+from kivy.uix.screenmanager import SlideTransition
 from kivy.uix.button import Button 
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.popup import Popup
@@ -9,6 +10,7 @@ from kivy.core.window import Window
 from kivy.core.text import LabelBase
 from kivy.properties import ObjectProperty
 from kivy.utils import get_color_from_hex
+from kivy.storage.jsonstore import JsonStore
 
 from arithmetic import Arithmetic
 from json_settings import json_settings, json_settings2
@@ -36,6 +38,21 @@ class KivyTutorRoot(BoxLayout):
         self.screen_list = []
         self.is_mix = False
         self.math_popup = MathPopup()
+        self.LoadSettings()
+
+    def LoadSettings(self):
+        store = JsonStore("data.json")
+
+        if store.exists("lower_num") or store.exists("high_num"):
+            low = store.get("lower_num")["value"]
+            high = store.get("upper_num")["value"]
+
+        if store.exists("lower_num"):
+            if low < high:
+                self.math_screen.min_num = low 
+        if store.exists("upper_num"):
+            self.math_screen.max_num = high
+    
 
     def changeScreen(self, next_screen):
         operations = ("addition subtraction  multiplication division".split())
@@ -211,10 +228,15 @@ class KivyTutorApp(App):
         settings.add_json_panel("Kivy Tutor App", self.config, data=json_settings)
 
     def on_config_change(self, config, section, key ,value):
+        store = JsonStore("data.json")
         if key == "upper_num":
             self.root.math_screen.max_num = int(value)
+            high = int(value)
+            store.put("upper_num", value=high)
         elif key == "lower_num":
             self.root.math_screen.min_num = int(value)
+            low = int(value)
+            store.put("lower_num", value=low)
 
 if __name__ == '__main__':
             # the run function is inherited from App class
